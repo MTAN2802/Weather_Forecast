@@ -16,12 +16,20 @@ def extract_forecast(location):
     return response.json()
 
 
-kogarah = extract_forecast("kogarah")
-print(kogarah["days"][1]['datetime'])
 #Transforming data
-def transform_data(data):
+def transform_data(data, days_ahead): #where days_ahead is how many days from current date to look at
+    dateToSee = data["days"][days_ahead]
     location_weather = {
         "name": data["resolvedAddress"],
-        "description": data["description"],
-        "date": data["days"]["datetime"]
+        "forecast_description": data["description"],
+        "date": dateToSee["datetime"],
+        "temp": dateToSee["temp"],
+        "max_temp": dateToSee["tempmax"],
+        "min_temp": dateToSee["tempmin"],
+        "feelslike": dateToSee["feelslike"],
+        "day_description": dateToSee["description"],
+        "preciptype": ",".join(dateToSee["preciptype"]),
+        "humidity": dateToSee["humidity"],
+        "uvindex": dateToSee["uvindex"]
     }
+    return location_weather

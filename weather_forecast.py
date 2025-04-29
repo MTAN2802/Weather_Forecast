@@ -7,7 +7,7 @@ import os
 import requests
 import json
 
-#Extracting data
+#Extracting data from visualcrossing
 def extract_forecast(location):
     API_key = 'M39R4H5LW9W2UK4ELJDF7Y9GJ'
     URL = f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{location}?unitGroup=metric&key={API_key}&contentType=json'

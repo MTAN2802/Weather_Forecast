@@ -1,9 +1,10 @@
 #This will be a workload for getting weather data
-# 
+
 # importing libraries
 import pandas as pd
 import numpy as np
-import os
+import sqlalchemy as sa
+import psycopg2
 import requests
 import json
 
@@ -47,4 +48,14 @@ def run_etl(location, days_ahead=0):
     transformed_data = transform_data(extracted_data, days_ahead)
     load_data(transformed_data, "weather_forecast.csv")
 
-run_etl('Kogarah', 14)
+#Using SQLAlchemy to map data to database
+from sqlalchemy import create_engine
+def orm(dbms, username, password, hostname, port, database,location):
+    engine = create_engine(f"{dbms}://{username}:{password}@{hostname}:{port}/{database}")
+    data = pd.read_csv("weather_forecast.csv")
+    data.to_sql(f'{location}_weather_forecast', engine, index=False, if_exists='replace')
+
+#Running code with example
+city = 'Tokyo'
+data_csv = run_etl(city, 14)
+orm("postgresql", "postgres", "12345678", "localhost", "5432", "postgres", city)

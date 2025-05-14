@@ -30,7 +30,7 @@ def transform_data(data, days_ahead): #where days_ahead is how many days in the 
             "max_temp": dateToSee["tempmax"],
             "min_temp": dateToSee["tempmin"],
             "feelslike": dateToSee["feelslike"],
-            "preciptype": ",".join(dateToSee["preciptype"]) if isinstance(dateToSee.get("preciptype"), (list, tuple)) else "Normal",
+            "preciptype": ",".join(dateToSee["preciptype"]) if isinstance(dateToSee.get("preciptype"), list) else "Normal",
             "humidity": dateToSee["humidity"],
             "uvindex": dateToSee["uvindex"]
         }
